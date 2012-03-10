@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Line Chart</title>
+    <script type="text/javascript" src="http://localhost/~esteele/mbostock-d3-2d66075/d3.js"></script>
+    <script type="text/javascript" src="http://localhost/~esteele/mbostock-d3-2d66075/d3.csv.js"></script>
+    <script type="text/javascript" src="http://localhost/~esteele/mbostock-d3-2d66075/d3.time.js"></script>
+    <style type="text/css">
+body {
+  font: 10px sans-serif;
+  margin: 0;
+}
+
+svg {
+ shape-rendering: crispEdges;
+}
+
+.axis {
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  //display: none;
+  fill: none;
+  stroke: #C0C0C0;
+}
+
+.y.axis path {
+  fill: none;
+  stroke: #C0C0C0;
+}
+
+.y.axis line {
+  fill: none;
+  stroke: #C0C0C0;
+  stroke-dasharray: 3 3;
+}
+
+line.zeroLine {
+	stroke: #666666;
+  stroke-dasharray: 3 3;
+}
+
+path.line {
+	fill: none;
+	stroke-width: 1.25px;
+}
+
+circle.endpoint {
+  fill: #4A4747;
+}
+
+.rule line {
+ stroke: #eee;
+}
+
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+
+d3.text("./index-prices.csv", function(datasetText) { 
+
+  var parsedCSV = d3.csv.parseRows(datasetText), // for column names and times
+			csvdata = d3.csv.parse(datasetText);
+
+	/* Read CSV file: first row =>  timeofday,xjo,kospi,nikkei  */
+	var maxval = 0,
+			minval = 0,
+			NO_VALUE = -0.00000001,
+			timePointsArray = new Array(),
+			indexValuesArray = new Array(),
+	    indexNames = parsedCSV[0].slice(1), // e.g. ["xjo", "kospi", "nikkei"]
+			parseTime = d3.time.format("%H:%M:%S").parse;
+
+  timeSeries = indexNames.map(function(indexName) {
+		return csvdata.map(function(csvRow) {
+			return {t: parseTime(csvRow["timeofday"]), val: parseFloat(csvRow[indexName])};
+		});
+	});
+
+  //console.dir(timeSeries);
+  // Max of array with n floats (n being the number of indicies being plotted),
+	//  each float being the maximum value of the array of values (each being a single
+  //  data point (y is the value)
+  maxval = Math.max.apply(Math, timeSeries.map(function(oneIndex) { 
+    	return Math.max.apply(Math, oneIndex.map(function(onePoint) {
+				return onePoint.val; })
+	)}));
+  minval = Math.min.apply(Math, timeSeries.map(function(oneIndex) { 
+    	return Math.min.apply(Math, oneIndex.map(function(onePoint) {
+				return onePoint.val; })
+  )}));
+
+  timePointsArray = parsedCSV.map(function(row) { return parseTime(row[0]); }).slice(1);
+
+	var  w = 407, // half of the original value
+	 		 h = 250, // half of the original value
+			 padding = 30,
+			 x = d3.time.scale()
+			 	.domain([timePointsArray[0], timePointsArray[timePointsArray.length-1]])
+			 	.range([0, w]),
+			 y = d3.scale.linear()
+				.domain([minval, maxval])
+				.range([h, 0]),
+			 colour = d3.scale.category10(),
+			 xAxis = d3.svg.axis()
+				.scale(x)
+				.tickSize(d3.time.hours, 1, 0)
+				.tickFormat(d3.time.format("%I%p")),
+			 yAxis = d3.svg.axis()
+				.scale(y)
+				.tickSize(0.5, -w, 0)
+				.ticks(4)
+				.orient("left");
+
+   var vis = d3.select("body")
+     .append("svg:svg")
+       .attr("width", w + padding * 2)
+       .attr("height", h + padding * 2)
+     .append("svg:g")
+       .attr("class", "graphholder")
+       .attr("transform", "translate(" + padding + "," + padding + ")");
+
+	vis.append("svg:g")
+		.attr("class", "x axis")
+		.attr("transform", "translate(0," + h + ")")
+		.call(xAxis);
+
+  vis.append("svg:line")
+		.attr("class", "zeroLine")
+		.attr("x2", w)
+		.attr("transform", "translate(0," + y(0) + ")");
+
+
+  vis.append("svg:g")
+		.attr("class", "y axis")
+		.call(yAxis);
+
+  for (var i=0; i < indexNames.length; i++) {
+		indexName = indexNames[i];
+ 
+    indexTimeSeries = timeSeries[i].filter(function(d, i) { return d.val != NO_VALUE; })
+		vis.selectAll("g#graphholder")
+			.data([indexTimeSeries])
+		.enter().append("svg:path")
+		 .attr("class", "line")
+		 .attr("stroke", colour(i))
+		 .attr("d", d3.svg.line()
+			 .x(function(d) { return x(d.t); })
+			 .y(function(d) { return y(d.val); }));
+
+		 vis.selectAll("g#graphholder")
+			.data([indexTimeSeries[0], indexTimeSeries[indexTimeSeries.length - 1]])
+		 .enter().append("svg:circle")
+			 .attr("class", "endpoint")
+			 .attr("cx", function(d) { return x(d.t); })
+			 .attr("cy", function(d) { return y(d.val); })
+			 .attr("r", 3);
+
+		// Add a small label for the symbol name.
+		vis.append("svg:text")
+      .attr("x", x(indexTimeSeries[indexTimeSeries.length - 1].t) + 6)
+      .attr("y", y(indexTimeSeries[indexTimeSeries.length - 1].val) + 6)
+      .attr("text-anchor", "start")
+      .text(indexName);
+
+  }
+
+});
+
+    </script>
+  </body>
+</html>

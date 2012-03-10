@@ -1,0 +1,5 @@
+An attempt to create something similar to the Financial Time's Markets Data
+graph (http://markets.ft.com/research/Markets/Overview).
+
+generateIndexPrices.py makes a csv with three (excessively volatile) 
+  instruments that is then loaded by index-line.html
