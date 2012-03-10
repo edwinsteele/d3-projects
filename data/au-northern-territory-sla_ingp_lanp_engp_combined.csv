@@ -1,0 +1,55 @@
+SLA Name,SLA ID,Count IP with good english,Count IP without good english,Count IP without stated english proficiency,Count of unknown Indigenous status without stated english proficiency,Indigenous Sample Size,Percent IP with good english,Percent IP without good english,Percent IP without stated english proficiency,Percent of unknown Indigenous status without stated english language proficiency (% of total IPs),Percent Protestant,Dominant Indigenous Langauge Group
+Belyuen (CGC),710050540,136,0,0,0,136,1.000,0.000,0.000,0.000,0.315,Arandic
+Coomalie (CGC),710050700,244,0,0,265,244,1.000,0.000,0.000,1.086,0.253,Other Australian Indigenous Languages
+Cox-Finniss,710050759,63,0,0,51,63,1.000,0.000,0.000,0.810,0.127,"Australian Indigenous Languages, nfd"
+Cox Peninsula (CGC),710050770,20,0,0,25,20,1.000,0.000,0.000,1.250,0.143,Other Australian Indigenous Languages
+Tiwi Islands (CGC),710104050,1706,162,26,10,1894,0.901,0.086,0.014,0.005,0.008,Arnhem Land and Daly River Region Languages
+Jabiru (T),710152000,151,3,0,330,154,0.981,0.019,0.000,2.143,0.242,Arnhem Land and Daly River Region Languages
+Kunbarllanjnja (CGC),710152240,605,158,6,10,769,0.787,0.205,0.008,0.013,0.363,Arnhem Land and Daly River Region Languages
+South Alligator,710153309,193,7,0,49,200,0.965,0.035,0.000,0.245,0.082,Arnhem Land and Daly River Region Languages
+West Arnhem,710154809,1845,884,90,12,2819,0.654,0.314,0.032,0.004,0.394,Arnhem Land and Daly River Region Languages
+Daly,710200809,464,135,17,45,616,0.753,0.219,0.028,0.073,0.028,Arnhem Land and Daly River Region Languages
+Nauiyu Nambiyu (CGC),710202380,283,16,0,4,299,0.946,0.054,0.000,0.013,0.023,Arnhem Land and Daly River Region Languages
+Pine Creek (CGC),710203030,124,8,0,21,132,0.939,0.061,0.000,0.159,0.426,Arnhem Land and Daly River Region Languages
+Thamarrurr (CGC),710204020,1142,522,45,3,1709,0.668,0.305,0.026,0.002,0.000,Arnhem Land and Daly River Region Languages
+Angurugu (CGC),710250330,749,8,6,9,763,0.982,0.010,0.008,0.012,0.826,Arnhem Land and Daly River Region Languages
+East Arnhem - Bal,710251209,3941,1282,235,39,5458,0.722,0.235,0.043,0.007,0.582,Yolngu Matha
+Groote Eylandt,710251609,480,65,32,91,577,0.832,0.113,0.055,0.158,0.656,Arnhem Land and Daly River Region Languages
+Marngarr (CGC),710252340,113,113,13,6,239,0.473,0.473,0.054,0.025,0.867,Yolngu Matha
+Nhulunbuy,710252409,200,5,0,352,205,0.976,0.024,0.000,1.717,0.349,Yolngu Matha
+Numbulwar Numburindi (CGC),710252500,501,75,19,5,595,0.842,0.126,0.032,0.008,0.820,Other Australian Indigenous Languages
+Binjari (CGC),710300570,126,7,0,0,133,0.947,0.053,0.000,0.000,0.115,Other Australian Indigenous Languages
+Borroloola (CGC),710300600,553,13,3,37,569,0.972,0.023,0.005,0.065,0.203,Other Australian Indigenous Languages
+Daguragu (CGC),710300790,380,66,5,12,451,0.843,0.146,0.011,0.027,0.720,Northern Desert Fringe Area Languages
+Elsey,710301409,150,5,0,124,155,0.968,0.032,0.000,0.800,0.163,Other Australian Indigenous Languages
+Gulf,710301809,408,14,0,57,422,0.967,0.033,0.000,0.135,0.280,Other Australian Indigenous Languages
+Jilkminggan (CGC),710302100,264,0,0,3,264,1.000,0.000,0.000,0.011,0.033,Other Australian Indigenous Languages
+Katherine (T),710302200,1641,60,13,844,1714,0.957,0.035,0.008,0.492,0.359,Other Australian Indigenous Languages
+Lajamanu (CGC),710302270,384,176,12,0,572,0.671,0.308,0.021,0.000,0.791,Northern Desert Fringe Area Languages
+Mataranka (CGC),710302360,58,4,0,8,62,0.935,0.065,0.000,0.129,0.074,Other Australian Indigenous Languages
+Nyirranggulung Mardrulk Ngadberre (CGC),710302530,617,200,19,22,836,0.738,0.239,0.023,0.026,0.772,Other Australian Indigenous Languages
+Timber Creek (CGC),710304030,94,8,0,40,102,0.922,0.078,0.000,0.392,0.523,Arnhem Land and Daly River Region Languages
+Victoria,710304409,410,23,0,101,433,0.947,0.053,0.000,0.233,0.260,Northern Desert Fringe Area Languages
+Walangeri Ngumpinku (CGC),710304600,335,78,9,9,422,0.794,0.185,0.021,0.021,0.093,Northern Desert Fringe Area Languages
+Yugul Mangi (CGC),710305050,1166,237,27,21,1430,0.815,0.166,0.019,0.015,0.582,Other Australian Indigenous Languages
+Alpurrurulam (CGC),710350300,312,3,9,8,324,0.963,0.009,0.028,0.025,0.548,Arandic
+Elliott District (CGC),710351350,274,10,3,17,287,0.955,0.035,0.010,0.059,0.213,Northern Desert Fringe Area Languages
+Tableland,710353409,78,8,0,59,86,0.907,0.093,0.000,0.686,0.065,"Australian Indigenous Languages, nfd"
+Tennant Creek (T),710353800,1289,45,3,329,1337,0.964,0.034,0.002,0.246,0.318,Northern Desert Fringe Area Languages
+Tennant Creek - Bal,710354009,651,108,15,52,774,0.841,0.140,0.019,0.067,0.438,Arandic
+Alice Springs (T) - Charles,710400201,884,61,15,312,960,0.921,0.064,0.016,0.325,0.423,Arandic
+Alice Springs (T) - Heavitree,710400203,378,86,17,128,481,0.786,0.179,0.035,0.266,0.623,Arandic
+Alice Springs (T) - Larapinta,710400205,1378,34,12,542,1424,0.968,0.024,0.008,0.381,0.452,Arandic
+Alice Springs (T) - Ross,710400207,892,40,7,397,939,0.950,0.043,0.007,0.423,0.359,Arandic
+Alice Springs (T) - Stuart,710400208,322,18,0,279,340,0.947,0.053,0.000,0.821,0.418,Western Desert Language
+Anmatjere (CGC),710400360,732,99,3,4,834,0.878,0.119,0.004,0.005,0.713,Arandic
+Arltarlpilta (CGC),710400400,174,22,3,0,199,0.874,0.111,0.015,0.000,0.223,Arandic
+Hanson,710401909,521,77,6,8,604,0.863,0.127,0.010,0.013,0.565,Arandic
+Ltyentye Purte (CGC),710402320,420,76,5,0,501,0.838,0.152,0.010,0.000,0.017,Arandic
+Petermann-Simpson,710403009,795,189,4,331,988,0.805,0.191,0.004,0.335,0.686,Western Desert Language
+Sandover,710403209,1344,560,84,66,1988,0.676,0.282,0.042,0.033,0.176,Arandic
+Tanami,710403609,1435,627,18,42,2080,0.690,0.301,0.009,0.020,0.822,Western Desert Language
+Tapatjatjaka (CGC),710403650,142,60,5,0,207,0.686,0.290,0.024,0.000,0.324,Western Desert Language
+Wallace Rockhole (CGC),710404650,63,11,0,0,74,0.851,0.149,0.000,0.000,0.785,Arandic
+Watiyawanu (CGC),710404700,26,219,15,0,260,0.100,0.842,0.058,0.000,0.942,Western Desert Language
+Yuendumu (CGC),710405000,484,112,4,3,600,0.807,0.187,0.007,0.005,0.810,Northern Desert Fringe Area Languages

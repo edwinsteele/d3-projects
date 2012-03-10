@@ -2,3 +2,7 @@
 au-northern-territory_sla.json: map of Census 2006 Statistical Local Areas in
   Australia's Northern Territory. Data from http://www.abs.gov.au/ausstats/abs@.nsf/DetailsPage/1259.0.30.0022006?OpenDocument
   and processed in QGIS using simplify geometries with a tolerance of 0.0005.
+
+au-northern-territory-sla_ingp_lanp_engp_combined.csv: Processed 2006 Census
+  data focussing on spoken english language in the indigenous population,
+  indigenous language and religion.
