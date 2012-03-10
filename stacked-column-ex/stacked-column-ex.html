@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Stacked Column Test</title>
+    <script type="text/javascript" src="../lib/d3.v2.js"></script>
+    <style type="text/css">
+
+svg {
+  width: 500px;
+  height: 500px;
+  border: solid 1px #ccc;
+  font: 10px sans-serif;
+  shape-rendering: crispEdges;
+}
+
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+{
+
+var w = 500,
+    h = 500,
+    padTop = 20,
+    padLeft = 50,
+    padBottom = 30,
+    padRight = 20,
+    x = d3.scale.ordinal().rangeRoundBands([0, w - padLeft - padRight]),
+    y = d3.scale.linear().range([0, h - padTop - padBottom]),
+    z = d3.scale.ordinal().range(["lightpink", "darkgray", "lightblue"]);
+
+var chart = d3.select("body")
+  .append("svg:svg")
+    .attr("width", w)
+    .attr("height", h)
+  .append("svg:g")
+    .attr("transform", "translate(" + padRight + "," + (h - padBottom) + ")");
+
+d3.text("machine_usage.csv", function(datasetText) {
+
+  var parsedCSV = d3.csv.parseRows(datasetText), // for HTML table
+  		csvdata = d3.csv.parse(datasetText); // for graph
+
+  var table = d3.select("body")
+		.append("table")
+			.style("border-collapse", "collapse")
+      .style("border", "2px black solid");
+
+	table.selectAll("tr.colHead")
+    	.data(["dummy"])
+	   	.enter().append("tr")
+			.attr("class", "colHead")
+    .selectAll("th")
+			.data(parsedCSV[0])
+			.enter().append("th")
+			.text(function(d) { return d;});
+
+	table.selectAll("tr.normalRow")
+		.data(parsedCSV.slice(1))
+		.enter().append("tr")
+		.attr("class", "normalRow")
+	.selectAll("td")
+		.data(function(d) {return d;})
+		.enter().append("td")
+		.text(String);
+
+  // Don't need the machine (first entry in the array) for the dataset
+  // XXX - order in the array isn't the order of columns... it's a fluke that the slice gives us what we want
+  var slots = d3.layout.stack()(parsedCSV[0].slice(1).map(function(slot) {
+		return csvdata.map(function(d) {
+			return {x: d.machine, y: parseInt(d[slot])};
+		});
+	}));
+
+  // x-domain is by machine i.e. each machine is a value
+	x.domain(slots[0].map(function(d) { return d.x; }));
+  // y-domain
+	y.domain([0, d3.max(slots[slots.length - 1], function(d) { return d.y0 + d.y; })]);
+  
+  // Add a group for each slot type to contain the svg elements
+  var slotGroup = chart.selectAll("g.slotGroup")
+			.data(slots)
+		.enter().append("svg:g")
+			.attr("class", "slotGroup")
+			.style("fill", function(d, i) { return z(i); })
+			.style("stroke", function(d, i) { return d3.rgb(z(i)).darker(); });
+
+  // Add a rect for each machine/slot-type data point
+	var rect = slotGroup.selectAll("rect")
+		.data(Object)
+	.enter().append("svg:rect")
+		.attr("x", function(d) { return x(d.x); })
+		.attr("y", function(d) { return -y(d.y0) - y(d.y); })
+		.attr("height", function(d) { return y(d.y); })
+		.attr("width", x.rangeBand());
+
+  // Add a label for each machine
+	var label = chart.selectAll("text")
+		.data(x.domain())
+	.enter().append("svg:text")
+		.attr("x", function(d) { return x(d) + x.rangeBand() / 2;})
+		.attr("y", 6)
+		.attr("text-anchor", "middle")
+		.attr("dy", ".71em")
+		.text(String);
+
+  // y-axis rule container
+  var rule = chart.selectAll("g.rule")
+		.data(y.ticks(5))
+	.enter().append("svg:g")
+		.attr("class", "rule")
+		.attr("transform", function(d) { return "translate(0," + -y(d) + ")"; });
+
+  // horiz lines (base is heavy, others are empty
+  rule.append("svg:line")
+		.attr("x2", w - padLeft - padRight)
+		.style("stroke", function(d) { return d ? "#fff" : "#000"; })
+		.style("stroke-opacity", function(d) { return d ? .7 : null; });
+  
+  rule.append("svg:text")
+		.attr("x", w - padLeft - padRight + 6)
+		.attr("dy", ".35em")
+		.text(String);
+
+});
+
+}
+    </script>
+  </body>
+</html>
