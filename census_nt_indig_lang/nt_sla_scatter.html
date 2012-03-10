@@ -2,8 +2,7 @@
 <html>
   <head>
     <title>Northern Territory Spoken English Language Proficiency</title>
-    <script type="text/javascript" src="mbostock-d3-2d66075/d3.js"></script>
-    <script type="text/javascript" src="mbostock-d3-2d66075/d3.csv.js"></script>
+    <script type="text/javascript" src="../lib/d3.v2.js"></script>
     <style type="text/css">
 
 body {
@@ -53,7 +52,7 @@ var tooltip = d3.select("body")
   .attr("id", "tooltip")
   .text("");
 
-d3.csv("Census/sla_ingp-lanp-engp_combined.csv", function(data) {
+d3.csv("../data/au-northern-territory-sla_ingp_lanp_engp_combined.csv", function(data) {
   var languageGroups = [],
       maxSampleSize = 0;
 
