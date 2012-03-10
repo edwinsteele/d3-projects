@@ -1,1 +1,6 @@
 A collection of d3 projects that I've worked on for learning, experimentation or sharing.
+
+census_nt_indig_lang: Breakdown of spoken english language proficiency of
+  the Aboriginal population in Australia's northern territory. Also plots
+  religious association. Data from Australia's 2006 Census
+
