@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Australia</title>
+    <script type="text/javascript" src="/Users/esteele/Code/d3-projects/lib/d3.v2.js"></script>
+    <style type="text/css">
+
+#states path {
+  stroke: #fff;
+}
+
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+
+mapData = {"New South Wales":9, 
+	"Victoria":6,
+	"Queensland":3,
+	"South Australia":7,
+	"Western Australia":4,
+	"Tasmania": 6,
+	"Northern Territory": 7,
+	"Other Territories":5};
+
+var w = 960,
+    h = 500;
+
+var z = d3.scale.category10();
+
+var fill = d3.scale.log()
+    .domain(d3.extent(d3.values(mapData)))
+    .range(["brown", "steelblue"]);
+
+var projection = d3.geo.azimuthal()
+    .origin([135, -26])
+		.translate([250,180])
+    .scale(700);
+
+var path = d3.geo.path()
+    .projection(projection);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", w)
+    .attr("height", h);
+
+var states = svg.append("g")
+    .attr("id", "states");
+
+d3.json("/Users/esteele/Documents/Code/1259030002_ste06aaust_shape/STE06aAUST_5e-3-selection.geojson", function(collection) {
+  states.selectAll("path")
+      .data(collection.features)
+    .enter().append("path")
+			.attr("fill", function(d) { return fill(mapData[(d.properties["STATE_NAME"])]); })
+      .attr("d", path);
+});
+
+
+    </script>
+  </body>
+</html>
