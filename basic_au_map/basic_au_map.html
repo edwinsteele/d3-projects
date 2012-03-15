@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Australia</title>
-    <script type="text/javascript" src="/Users/esteele/Code/d3-projects/lib/d3.v2.js"></script>
+    <script type="text/javascript" src="../lib/d3.v2.js"></script>
     <style type="text/css">
 
 #states path {
@@ -14,14 +14,15 @@
   <body>
     <script type="text/javascript">
 
-mapData = {"New South Wales":9, 
-	"Victoria":6,
-	"Queensland":3,
-	"South Australia":7,
-	"Western Australia":4,
-	"Tasmania": 6,
-	"Northern Territory": 7,
-	"Other Territories":5};
+awesomeness = {"New South Wales":8, // + it's NSW, - legacy of NSW Labor 
+	"Victoria":6, // + Architecture, Food, - it's not NSW
+	"Queensland":3, // + Beaches, - it's QLD, Wally Lewis
+	"South Australia":7, // + Friends, Moonarie, - it's not NSW
+	"Western Australia":4, // + Beautiful Coastline, Mining Revenues, - delusions of seccession
+	"Tasmania": 6, // + table mountain, cheese, - weather
+	"Northern Territory": 7, // + arnhem land, cumulo nimbus clouds over Darwin, - mosquitoes
+	"Other Territories":5, // I'm sure they're ok
+  };
 
 var w = 960,
     h = 500;
@@ -29,7 +30,7 @@ var w = 960,
 var z = d3.scale.category10();
 
 var fill = d3.scale.log()
-    .domain(d3.extent(d3.values(mapData)))
+    .domain(d3.extent(d3.values(awesomeness)))
     .range(["brown", "steelblue"]);
 
 var projection = d3.geo.azimuthal()
@@ -47,11 +48,13 @@ var svg = d3.select("body").append("svg")
 var states = svg.append("g")
     .attr("id", "states");
 
-d3.json("/Users/esteele/Documents/Code/1259030002_ste06aaust_shape/STE06aAUST_5e-3-selection.geojson", function(collection) {
+d3.json("../data/au-states.geojson", function(collection) {
   states.selectAll("path")
       .data(collection.features)
     .enter().append("path")
-			.attr("fill", function(d) { return fill(mapData[(d.properties["STATE_NAME"])]); })
+			.attr("fill", function(d) {
+         return fill(awesomeness[(d.properties["STATE_NAME"])]);
+       })
       .attr("d", path);
 });
 
