@@ -86,7 +86,7 @@ d3.csv("../data/au-northern-territory-sla_ingp_lanp_engp_combined.csv", function
       graphRightPadding = 10,
       graphTopPadding = 20,
       graphBottomPadding = 20,
-      minDatapointRadius = 2,
+      minDatapointRadius = 1,
       maxDatapointRadius = 20,
 
       // dominant language group
@@ -102,7 +102,7 @@ d3.csv("../data/au-northern-territory-sla_ingp_lanp_engp_combined.csv", function
           legendTextHeight + legendTextBottomPadding + 66,
           legendTextHeight + legendTextBottomPadding + 100])
       // radius of datapoints
-      r = d3.scale.linear()
+      r = d3.scale.sqrt()
         .domain([0,maxSampleSize])
         .range([minDatapointRadius,maxDatapointRadius]),
       // percentage with good english
