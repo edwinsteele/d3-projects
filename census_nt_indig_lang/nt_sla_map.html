@@ -17,7 +17,7 @@ body {
     </style>
   </head>
   <body>
-  <div class="topLevelDiv"></div>
+  <div id="topLevelDiv"></div>
     <script type="text/javascript">
 
 SLA_NAME_STR="SLA Name";
@@ -73,7 +73,7 @@ d3.csv(csvFile, function(data) {
   var path = d3.geo.path()
       .projection(projection);
   
-  svg = d3.select(".topLevelDiv").append("svg")
+  svg = d3.select("#topLevelDiv").append("svg")
         .attr("width", w)
         .attr("height", h)
       .append("g")
