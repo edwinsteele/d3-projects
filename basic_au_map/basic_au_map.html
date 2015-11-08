@@ -12,6 +12,7 @@
     </style>
   </head>
   <body>
+  <h1>Australian States coloured by Awesomeness</h1>
     <script type="text/javascript">
 
 awesomeness = {"New South Wales":8, // + it's NSW, - legacy of NSW Labor 
@@ -57,8 +58,15 @@ d3.json("../data/au-states.geojson", function(collection) {
        })
       .attr("d", path);
 });
+</script>
+<script src="https://gist.github.com/edwinsteele/08e1ef7c4326c2e06934.js"></script>
 
+I've done this page for a few reasons:
+<ul>
+<li>I wanted to see a d3 map using json maps that showed something other than the USA</li>
+<li>I wanted to use colour ranges</li>
+<li></li>
 
-    </script>
+</ul>
   </body>
 </html>
