@@ -15,6 +15,15 @@ text{
   font-weight: 300;
   font-size: 12px;
 }
+
+#happy{
+  font-size: 16px;
+}
+
+#funny{
+  background: rgba(0,153,76,0.8);
+}
+
     </style>
   </head>
   <body>
@@ -24,16 +33,24 @@ text{
 var width = 960,
     height = 500;
 
+var happy_style = {"font-size": "48"};
+var funny_style = {"background": "rgba(0,153,76,0.8)"};
+
 var locations = [
 {
     name: "Sydney",
     lat: -33,
-    lon: 151
+    lon: 151,
+    css_class: "happy",
+    css_style: happy_style
 },{
     name: "otherpoint",
     lat: -15,
-    lon: 125   
+    lon: 125,
+    css_class: "funny",
+    css_style: funny_style
 }];
+
 
 var projection = d3.geo.mercator()
     .center([135, -26])
@@ -73,6 +90,10 @@ locationText.enter()
   .attr('y', function(d) {return projection([d.lon, d.lat])[1]})
   .attr('dx', 5)
   .attr('dy', 3)
+  //.classed(function(d) { return d.css_class}, true)
+  .style(function(d) {return d.css_style})
+  .attr('font-size', 124)
+  .attr('fill', 'red')
   .text(function(d) {return d.name});
 
 
