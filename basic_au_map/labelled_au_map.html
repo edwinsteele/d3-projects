@@ -6,7 +6,7 @@
     <script type="text/javascript" src="../lib/d3.v310.js"></script>
     <style type="text/css">
 
-#states path {
+#art path {
   stroke: #fff;
 }
 
@@ -16,18 +16,34 @@ text{
   font-size: 12px;
 }
 
-.happy{
-  font-size: 16px;
+.htmlLabel {
+    font-family: arial,helvetica,'sans-serif';
+    font-size: 12px;
+    padding: 8px;
+    background-color: rgba(255,255,255,.3)
 }
-
-.funny{
-  background: rgba(0,153,76,0.8);
+.htmlLabel p {
+    margin: 0;
+}
+.locationLabel {
+    font-size: 18px;
+    text-align: center;
+}
+p.description {
+     margin-top: 8px;   
 }
 
     </style>
   </head>
   <body>
   <h1>Australian Map with Labels</h1>
+  <svg>
+    <g id="map">
+      <g id="art" />
+      <g id="labels" />
+    </g>
+  </svg>
+
 <script type="text/javascript">
 
 var width = 960,
@@ -40,9 +56,39 @@ var locations = [
     lon: 151,
     css_class: "happy",
 },{
-    name: "otherpoint",
-    lat: -15,
-    lon: 125,
+    name: "Canberra",
+    lat: -35,
+    lon: 149,
+    css_class: "funny",
+},{
+    name: "Darwin",
+    lat: -12,
+    lon: 131,
+    css_class: "funny",
+},{
+    name: "Hobart",
+    lat: -48,
+    lon: 147,
+    css_class: "funny",
+},{
+    name: "Perth",
+    lat: -32,
+    lon: 116,
+    css_class: "funny",
+},{
+    name: "Melbourne",
+    lat: -36,
+    lon: 145,
+    css_class: "funny",
+},{
+    name: "Brisbane",
+    lat: -27,
+    lon: 153,
+    css_class: "funny",
+},{
+    name: "Adelaide",
+    lat: -35,
+    lon: 139,
     css_class: "funny",
 }];
 
@@ -54,45 +100,52 @@ var projection = d3.geo.mercator()
 var path = d3.geo.path()
     .projection(projection);
 
-var svg = d3.select("body").append("svg")
+// Set dimensions of SVG elemet
+var svg = d3.select("svg")
     .attr("width", width)
     .attr("height", height);
 
-var states = svg.append("g")
-    .attr("id", "states");
+// Drawings go in #art, and labels go in #labels
+art = svg.select("#art");
+labels = svg.select("#labels");
 
 d3.json("../data/au-states.geojson", function(error, data) {
-  states.selectAll("path")
+  art.selectAll("path")
       .data(data.features)
     .enter().append("path")
-      .attr("d", path);
+      .attr("d", path)
+      .attr("z", 1);
 });
 
+var locationPoints = art.selectAll('circle').data(locations);
+var locationLabels = labels.selectAll('foreignObject').data(locations);
 
-var locationPoints = svg.selectAll('circle').data(locations);
-var locationText = svg.selectAll('text').data(locations);
-
+// FIXME can't get points to show above paths, even with z
 locationPoints.enter()
   .append('circle')
   .attr('cx', function(d) {return projection([d.lon, d.lat])[0]})
   .attr('cy', function(d) {return projection([d.lon, d.lat])[1]})
-  .attr('r', 4)
+  .attr('r', 10)
+  .attr('z', 2)
   .attr('fill', 'steelblue');
 
-locationText.enter()
-  .append('text')
+foreignObjects = locationLabels.enter()
+  .append('foreignObject')
   .attr('x', function(d) {return projection([d.lon, d.lat])[0]})
   .attr('y', function(d) {return projection([d.lon, d.lat])[1]})
-  .attr('dx', 5)
-  .attr('dy', 3)
-  //.classed(function(d) { return d.css_class}, true)
-  .style(function(d) {return d.css_style})
-  .attr('font-size', 124)
-  .attr('fill', 'red')
-  .text(function(d) {return d.name});
+  .attr('width', 100) // XXX do something based on text length and font sz?
+  .attr('height', 50) // XXX revisit
+
+htmlDOMs = foreignObjects.append('xhtml:body')
+
+htmlLabels = htmlDOMs.append('div')
+  .classed('htmlLabel', true)
+
+htmlLabels.append('p')
+  .classed('locationLabel', true)
+  .html(function(d) {return d.name});
 
 
 </script>
-Testing labelling
 </body>
 </html>
