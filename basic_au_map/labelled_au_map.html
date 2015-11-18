@@ -6,41 +6,10 @@
     <script type="text/javascript" src="../lib/d3.v310.js"></script>
     <style type="text/css">
 
-/*
-#art path {
-  stroke: #fff;
-  fill: #ddc;
-}
-*/
-
-text{
-  font-family: Helvetica;
-  font-weight: 300;
-  font-size: 12px;
-}
-
-.locationPoint {
-    width: 10px;
-    height: 10px;
-    background-color: steelblue;
-    border-radius: 5px;
-    z-index: 1;
-}
-.htmlLabel {
-    font-family: arial,helvetica,'sans-serif';
-    font-size: 12px;
-    padding: 8px;
-    background-color: rgba(255,255,255,.3)
-}
-.htmlLabel p {
-    margin: 0;
-}
 .locationLabel {
-    font-size: 18px;
-    text-align: center;
-}
-p.description {
-     margin-top: 8px;   
+    font-family: arial,helvetica,'sans-serif';
+    background-color: rgba(255,255,255,.3);
+    text-align: left;
 }
 
     </style>
@@ -48,17 +17,16 @@ p.description {
   <body>
   <h1>Australian Map with Labels</h1>
   <svg>
-    <g id="map">
-      <g id="art" />
-      <g id="labels" />
-    </g>
+    <g id="map" />
+    <g id="art" />
+    <g id="labels" />
   </svg>
 
 <script type="text/javascript">
 
 var width = 960,
     height = 500,
-    point_size_px = 10; 
+    label_text_size_px = 12;
 
 var locations = [
 { name: "Sydney", lat: -33.873, lon: 151.206, css_class: "happy", },
@@ -111,9 +79,9 @@ locationPoints.enter()
 labelForeignObjects = locationLabels.enter()
   .append('foreignObject')
   .attr('x', function(d) {return projection([d.lon, d.lat])[0]})
-  .attr('y', function(d) {return projection([d.lon, d.lat])[1]})
-  .attr('width', 100) // XXX do something based on text length and font sz?
-  .attr('height', 50) // XXX revisit
+  .attr('y', function(d) {return projection([d.lon, d.lat])[1] - 1.5 * label_text_size_px})
+  .attr('width', function(d) {return d.name.length * label_text_size_px})
+  .attr('height', 2.5 * label_text_size_px + "px")
 
 htmlDOMs = labelForeignObjects.append('xhtml:body')
 
@@ -122,8 +90,8 @@ htmlLabels = htmlDOMs.append('div')
 
 htmlLabels.append('p')
   .classed('locationLabel', true)
+  .style("font-size", label_text_size_px + "px")
   .html(function(d) {return d.name});
-
 
 </script>
 </body>
