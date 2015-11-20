@@ -4,11 +4,26 @@
 	<meta charset="utf-8">
     <title>Australia</title>
     <script type="text/javascript" src="../lib/d3.v359.js"></script>
+    <script type="text/javascript" src="../lib/topojson.js"></script>
     <style type="text/css">
+
+.temperature_cold { background-color: blue; }
+.temperature_cool { background-color: green; }
+.temperature_warm { background-color: yellow; }
+.temperature_hot { background-color: orange; }
+.temperature_veryhot { background-color: red; }
+.population_none { font-style: normal; }
+.population_few { font-weight: normal; }
+.population_some { font-weight: bold; }
+.population_many { font-weight: bold; font-size: 150%; }
+.population_unknown { font-style: italic; }
+.no_longer_exists { text-decoration: line-through; }
+.still_exists { text-decoration: none; }
+.bordered_table { border-style: solid; border-width: 1px; }
+.bordered_td { border-style: solid; border-width: 1px; }
 
 .locationLabel {
     font-family: arial,helvetica,'sans-serif';
-    background-color: rgba(255,255,255,.3);
     text-align: left;
 }
 
@@ -29,14 +44,14 @@ var width = 960,
     label_text_size_px = 12;
 
 var locations = [
-{ name: "Sydney", lat: -33.873, lon: 151.206, css_class: "happy", },
-{ name: "Canberra", lat: -35.308, lon: 149.124, css_class: "funny", },
-{ name: "Darwin", lat: -12.462, lon: 130.841, css_class: "funny", },
-{ name: "Hobart", lat: -42.881, lon: 147.323, css_class: "funny", },
-{ name: "Perth", lat: -31.952, lon: 115.857, css_class: "funny", },
-{ name: "Melbourne", lat: -37.814, lon: 144.963, css_class: "funny", },
-{ name: "Brisbane", lat: -27.471, lon: 153.023, css_class: "funny", },
-{ name: "Adelaide", lat: -34.928, lon: 138.599, css_class: "funny", }
+{ name: "Sydney", lat: -33.873, lon: 151.206, css_class: "temperature_warm population_some still_exists", govt_site: "http://nsw.gov.au"},
+{ name: "Canberra", lat: -35.308, lon: 149.124, css_class: "temperature_cool population_veryhot no_longer_exists", govt_site: "http://www.gov.au"},
+{ name: "Darwin", lat: -12.462, lon: 130.841, css_class: "temperature_hot population_many still_exists", govt_site: "http://nt.gov.au"},
+{ name: "Hobart", lat: -42.881, lon: 147.323, css_class: "temperature_cold population_none still_exists", govt_site: "http://tas.gov.au"},
+{ name: "Perth", lat: -31.952, lon: 115.857, css_class: "temperature_veryhot population_few no_longer_exists", govt_site: "http://wa.gov.au"},
+{ name: "Melbourne", lat: -37.814, lon: 144.963, css_class: "temperature_cool population_many still_exists", govt_site: "http://vic.gov.au"},
+{ name: "Brisbane", lat: -27.471, lon: 153.023, css_class: "temperature_hot population_unknown no_longer_exists", govt_site: "http://qld.gov.au"},
+{ name: "Adelaide", lat: -34.928, lon: 138.599, css_class: "temperature_veryhot population_few still_exists", govt_site: "http://sa.gov.au"}
 ];
 
 var projection = d3.geo.mercator()
@@ -55,15 +70,15 @@ var svg = d3.select("svg")
 art = svg.select("#art");
 labels = svg.select("#labels");
 
-d3.json("../data/au-states.geojson", function(error, data) {
+d3.json("../data/au-states-topo.json", function(error, data) {
+  if (error) return console.error(error);
   art.selectAll("path")
-      .data(data.features)
+      .data(topojson.feature(data, data.objects.austates).features)
     .enter().append("path")
       .attr("d", path)
       .attr("fill", "#fff")
       .attr("fill-opacity", 0)
       .attr("stroke", "#ddd")
-
 });
 
 var locationPoints = art.selectAll('circle').data(locations);
@@ -80,7 +95,7 @@ labelForeignObjects = locationLabels.enter()
   .append('foreignObject')
   .attr('x', function(d) {return projection([d.lon, d.lat])[0]})
   .attr('y', function(d) {return projection([d.lon, d.lat])[1] - 1.5 * label_text_size_px})
-  .attr('width', function(d) {return d.name.length * label_text_size_px})
+  .attr('width', function(d) {return String(d.name.length * label_text_size_px * 0.75) + "px"})
   .attr('height', 2.5 * label_text_size_px + "px")
 
 htmlDOMs = labelForeignObjects.append('xhtml:body')
@@ -89,9 +104,9 @@ htmlLabels = htmlDOMs.append('div')
   .classed('htmlLabel', true)
 
 htmlLabels.append('p')
-  .classed('locationLabel', true)
+  .attr("class", function(d) { return d.css_class })
   .style("font-size", label_text_size_px + "px")
-  .html(function(d) {return d.name});
+  .html(function(d) {return "<a href='" + d.govt_site + "'>" + d.name + "</a>"})
 
 </script>
 </body>
