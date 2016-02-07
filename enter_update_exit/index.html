@@ -1,0 +1,77 @@
+<html>
+<head>
+  <title>Enter Exit Update Filtering</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+
+<div id="shown_list"></div>
+<div id="not_shown_list"></div>
+
+<form onsubmit="render()">
+  <!-- XXX check whether number is usable on most platforms -->
+  <label>Show values at least: <input type="number" id="value_threshold"
+     name="value_threshold" value="1" /></label>
+  <input type="button" value="Apply" onclick='render()'/>
+</form>
+<script type="text/javascript"
+  src="../lib/d3.v359.min.js"></script>
+<script type="text/javascript">
+
+function render() {
+  var value_threshold = document.getElementById("value_threshold").value
+
+  var data = [
+    {value: 0, text: "Zero"},
+    {value: 1, text: "One"},
+    {value: 2, text: "Two"},
+    {value: 3, text: "Three"},
+    {value: 4, text: "Four"},
+    {value: 5, text: "Five"},
+  ];
+
+  var data_to_plot = data.filter(function(x) { return x["value"] >= value_threshold; });
+  var data_to_hide = data.filter(function(x) { return x["value"] < value_threshold; });
+
+  d3.select("#shown_list").selectAll("p")
+    .data([data_to_plot.length])
+    .enter().append("p")
+    .html(function(d) {return "Showing " + d + " values >= " + value_threshold;});
+
+  // Make selection
+  var s = d3.select("#shown_list").selectAll("div")
+    .data(data_to_plot)
+  // Create new DOM elements
+  s.enter().append("div")
+    .append("i")
+  // Remove old DOM elements
+  s.exit().remove();
+  // Set values in DOM elements
+  s.html(function(d) { return d.text; })
+
+  // Make selection
+  s = d3.select("#not_shown_list").selectAll("p")
+    .data([data_to_hide.length])
+  // Create new DOM elements
+  s.enter().append("p")
+  // Never need to remove DOM elements - no exit().remove() necessary
+  // Set values in elements
+  s.html(function(d) {return "Hiding " + d + " values < " + value_threshold;});
+
+  // Make selection
+  s = d3.select("#not_shown_list").selectAll("div")
+    .data(data_to_hide)
+  // Create new DOM elements
+  s.enter().append("div")
+    .append("span")
+  // Remove old DOM elements
+  s.exit().remove();
+  // Set values in DOM elements
+  s.html(function(d) { return d.text; })
+}
+
+render();
+</script>
+
+</body>
+</html>

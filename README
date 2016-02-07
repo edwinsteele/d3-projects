@@ -9,3 +9,5 @@ index-time-series: market data time-series graph with data generator
 stacked-column-ex: stacked column graph with tabulated raw data
 
 basic_au_map: first pass at using maps. Simple coloured map of Australia
+
+enter_exit_update: a simple example of addition/removal and update of DOM elements based on a field in a form
