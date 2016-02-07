@@ -5,8 +5,10 @@
 </head>
 <body>
 
-<div id="shown_list"></div>
-<div id="not_shown_list"></div>
+<div id="shown_text"></div>
+<ul id="shown_list"></ul>
+<div id="not_shown_text"></div>
+<ul id="not_shown_list"></ul>
 
 <div>
 <br>
@@ -37,7 +39,7 @@ function render() {
   var data_to_hide = data.filter(function(x) { return x["value"] < value_threshold; });
 
   // Make selection
-  var s = d3.select("#shown_list").selectAll("p")
+  var s = d3.select("#shown_text").selectAll("p")
     .data([data_to_plot.length])
   // Create new DOM elements
   s.enter().append("p")
@@ -46,27 +48,27 @@ function render() {
   s.html(function(d) {return "Showing " + d + " values >= " + value_threshold;});
 
   // Make selection
-  s = d3.select("#shown_list").selectAll("div")
+  s = d3.select("#shown_list").selectAll("li")
     .data(data_to_plot)
   // Create new DOM elements
-  s.enter().append("div")
+  s.enter().append("li")
   // Remove old DOM elements
   s.exit().remove()
   // Set values in DOM elements - do this after elements have been added and removed
   s.html(function(d) { return d.text; })
 
   // Make selection
-  s = d3.select("#not_shown_list").selectAll("p")
+  s = d3.select("#not_shown_text").selectAll("p")
     .data([data_to_hide.length])
   // Create new DOM elements
   s.enter().append("p")
   s.html(function(d) {return "Hiding " + d + " values < " + value_threshold;});
 
   // Make selection
-  s = d3.select("#not_shown_list").selectAll("div")
+  s = d3.select("#not_shown_list").selectAll("li")
     .data(data_to_hide)
   // Create new DOM elements
-  s.enter().append("div")
+  s.enter().append("li")
     .append("span")
   // Remove old DOM elements
   s.exit().remove();
