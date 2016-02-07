@@ -24,6 +24,9 @@
 <script type="text/javascript">
 
 function render() {
+  // Style Show numbers in Italics and hidden ones without italics
+  // This means that there is a subelement which needs creation and
+  //  management, which makes some princples clearer
   var value_threshold = document.getElementById("value_threshold").value
 
   var data = [
@@ -52,10 +55,11 @@ function render() {
     .data(data_to_plot)
   // Create new DOM elements
   s.enter().append("li")
+   .each(function(d) { d3.select(this).append("i") })
   // Remove old DOM elements
   s.exit().remove()
   // Set values in DOM elements - do this after elements have been added and removed
-  s.html(function(d) { return d.text; })
+  s.each(function(d) { d3.select(this).selectAll("i").text(d.text)})
 
   // Make selection
   s = d3.select("#not_shown_text").selectAll("p")
@@ -69,7 +73,6 @@ function render() {
     .data(data_to_hide)
   // Create new DOM elements
   s.enter().append("li")
-    .append("span")
   // Remove old DOM elements
   s.exit().remove();
   // Set values in DOM elements
