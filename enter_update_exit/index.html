@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
 </head>
 <body>
+	This shows the d3 general update pattern (enter, exit, update), with filtering based on a form value. It also shows a nested italics element to demonstrate that data is bound to nested elements, and how there's a need to update the nested element but there is not need to explicitly remove the nested element; it's sufficient to remove the parent.
+
+<hr>
 
 <div>Showing <span id="shown_count"></span> values &gt;= <span id="shown_value_threshold"></span></div>
 <ul id="shown_list"></ul>
@@ -12,10 +15,10 @@
 
 <div>
 <br>
-<form onsubmit="render()">
+<form action="javascript:render()" onsubmit="render()">
   <!-- XXX check whether number is usable on most platforms -->
   <label>Show values at least: <input type="number" id="value_threshold"
-     name="value_threshold" value="1" /></label>
+     name="value_threshold" value="1"/></label>
   <input type="button" value="Apply" onclick='render()'/>
 </form>
 </div>
