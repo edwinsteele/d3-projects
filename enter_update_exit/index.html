@@ -5,9 +5,9 @@
 </head>
 <body>
 
-<div id="shown_text"></div>
+<div>Showing <span id="shown_count"></span> values &gt;= <span id="shown_value_threshold"></span></div>
 <ul id="shown_list"></ul>
-<div id="not_shown_text"></div>
+<div>Hiding <span id="not_shown_count"></span> values &lt; <span id="not_shown_value_threshold"></span></div>
 <ul id="not_shown_list"></ul>
 
 <div>
@@ -41,14 +41,10 @@ function render() {
   var data_to_plot = data.filter(function(x) { return x["value"] >= value_threshold; });
   var data_to_hide = data.filter(function(x) { return x["value"] < value_threshold; });
 
-  // Make selection
-  var s = d3.select("#shown_text").selectAll("p")
-    .data([data_to_plot.length])
-  // Create new DOM elements
-  s.enter().append("p")
-  // Never need to remove DOM elements - no exit().remove() necessary
-  // Set values in DOM elements - do this after elements have been added and removed
-  s.html(function(d) {return "Showing " + d + " values >= " + value_threshold;});
+  document.getElementById("shown_count").textContent = data_to_plot.length;
+  document.getElementById("shown_value_threshold").textContent = value_threshold;
+  document.getElementById("not_shown_count").textContent = data_to_hide.length;
+  document.getElementById("not_shown_value_threshold").textContent = value_threshold;
 
   // Make selection
   s = d3.select("#shown_list").selectAll("li")
@@ -60,13 +56,6 @@ function render() {
   s.exit().remove()
   // Set values in DOM elements - do this after elements have been added and removed
   s.each(function(d) { d3.select(this).selectAll("i").text(d.text)})
-
-  // Make selection
-  s = d3.select("#not_shown_text").selectAll("p")
-    .data([data_to_hide.length])
-  // Create new DOM elements
-  s.enter().append("p")
-  s.html(function(d) {return "Hiding " + d + " values < " + value_threshold;});
 
   // Make selection
   s = d3.select("#not_shown_list").selectAll("li")
