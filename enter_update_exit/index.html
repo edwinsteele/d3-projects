@@ -8,12 +8,15 @@
 <div id="shown_list"></div>
 <div id="not_shown_list"></div>
 
+<div>
+<br>
 <form onsubmit="render()">
   <!-- XXX check whether number is usable on most platforms -->
   <label>Show values at least: <input type="number" id="value_threshold"
      name="value_threshold" value="1" /></label>
   <input type="button" value="Apply" onclick='render()'/>
 </form>
+</div>
 <script type="text/javascript"
   src="../lib/d3.v359.min.js"></script>
 <script type="text/javascript">
@@ -33,20 +36,23 @@ function render() {
   var data_to_plot = data.filter(function(x) { return x["value"] >= value_threshold; });
   var data_to_hide = data.filter(function(x) { return x["value"] < value_threshold; });
 
-  d3.select("#shown_list").selectAll("p")
+  // Make selection
+  var s = d3.select("#shown_list").selectAll("p")
     .data([data_to_plot.length])
-    .enter().append("p")
-    .html(function(d) {return "Showing " + d + " values >= " + value_threshold;});
+  // Create new DOM elements
+  s.enter().append("p")
+  // Never need to remove DOM elements - no exit().remove() necessary
+  // Set values in DOM elements - do this after elements have been added and removed
+  s.html(function(d) {return "Showing " + d + " values >= " + value_threshold;});
 
   // Make selection
-  var s = d3.select("#shown_list").selectAll("div")
+  s = d3.select("#shown_list").selectAll("div")
     .data(data_to_plot)
   // Create new DOM elements
   s.enter().append("div")
-    .append("i")
   // Remove old DOM elements
-  s.exit().remove();
-  // Set values in DOM elements
+  s.exit().remove()
+  // Set values in DOM elements - do this after elements have been added and removed
   s.html(function(d) { return d.text; })
 
   // Make selection
@@ -54,8 +60,6 @@ function render() {
     .data([data_to_hide.length])
   // Create new DOM elements
   s.enter().append("p")
-  // Never need to remove DOM elements - no exit().remove() necessary
-  // Set values in elements
   s.html(function(d) {return "Hiding " + d + " values < " + value_threshold;});
 
   // Make selection
